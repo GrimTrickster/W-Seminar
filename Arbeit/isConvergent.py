@@ -1,6 +1,5 @@
 from sympy import Symbol, sympify, zoo, Derivative, solve
 import matplotlib.pyplot as plt
-import numpy as np
 
 x = Symbol('x')
 
@@ -69,7 +68,7 @@ prevDiff = 0
 grenzwert = None
 
 # Über alle Folenglieder iterieren
-for i in range(2+startIndex, userInputMaxIterations):
+for i in range(2+startIndex, len(folge)):
     # Betrag um Annäherung von unten und von oben zu berücksichtigen
     currDiff = abs(currValue - prevValue)
 
@@ -83,7 +82,7 @@ for i in range(2+startIndex, userInputMaxIterations):
     prevDiff = currDiff
 
 
-plt.plot(range(0, userInputMaxIterations), folge, 'ro')
+plt.plot(range(0, userInputMaxIterations), folge, 'ro', markersize=1)
 if grenzwert:
     print('Grenzwert: ' + str(grenzwert.evalf()))
     plt.axhline(y=grenzwert, color='r', linestyle='-')
