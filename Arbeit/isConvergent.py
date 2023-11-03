@@ -1,6 +1,8 @@
-from sympy import Symbol, sympify, zoo, Derivative, solve
+from sympy import Symbol, sympify, zoo, diff, S, pprint, solveset
 import matplotlib.pyplot as plt
+from math import ceil
 
+# Sympy-Schreibweise um x als Variable zu definieren
 x = Symbol('x')
 
 
@@ -8,7 +10,9 @@ def funktionZuFolge(funktion, max_length):
     a = []
     max_problemstelle = None
     for i in range(max_length):
+        # Sympy: Wert der Funktion an einer gewissen Stelle ausrechnen; "x mit einer entsprechenden Zahl SUBstituieren
         y = funktion.subs(x, i)
+        # Definitionslücken auffinden
         if y == zoo:
             max_problemstelle = i
             a.append(None)
@@ -20,15 +24,17 @@ def funktionZuFolge(funktion, max_length):
 # ############### Get User Input #####################
 #   Get+Create Function
 userInputFunktion = input('Bitte geben Sie eine zu überprüfende Funktion mit der Variable x an.')
+# Standard-Option wenn nichts eingegeben wird
 if userInputFunktion == '':
     userInputFunktion = 'x/(x+1)+2'
 
-print('=>  ' + userInputFunktion)
 f = sympify(userInputFunktion)
-
+# print('=>  ' + f)
+pprint(f)
 
 #   Get Max Iterations
 userInputMaxIterations = input('Bitte geben Sie die maximale Anzahl der zu überprüfenden Folgenglieder an.')
+# Standard-Option wenn nichts eingegeben wird
 if userInputMaxIterations == '':
     userInputMaxIterations = 1000
 else:
@@ -40,22 +46,25 @@ print('=>  ' + str(userInputMaxIterations))
 
 folge, maxProblemstelle = funktionZuFolge(f, userInputMaxIterations)
 print(folge)
-print("Problemstellen: " + str(maxProblemstelle))
 
 # ####################### Startindex ermitteln ######################
 startIndex = 0
-f_erste_ableitung = Derivative(f, x).doit()
-problemstellen = solve(f_erste_ableitung)
+f_erste_ableitung = diff(f, x)
+problemstellenSet = solveset(f_erste_ableitung, x, domain=S.Reals)
+problemstellen = []
+for solution in problemstellenSet.args:
+    problemstellen.append(solution)
 
 if maxProblemstelle is not None:
     problemstellen.append(maxProblemstelle)
-print(problemstellen)
+print('Problemstellen: ' + str(problemstellen))
 
 if len(problemstellen) > 0:
-    startIndex = 1
-    #startIndex = max(problemstellen) + 1
-print(startIndex)
-# TODO: Nullstellen überprüfen
+    if max(problemstellen).doit() == ceil(max(problemstellen).doit()):
+        startIndex = ceil(max(problemstellen)) + 1
+    else:
+        startIndex = ceil(max(problemstellen))
+print('Startindex: ' + str(startIndex))
 
 
 # ############################## Grenzwert bestimmen######################################
