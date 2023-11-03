@@ -29,7 +29,8 @@ if userInputFunktion == '':
     userInputFunktion = 'x/(x+1)+2'
 
 f = sympify(userInputFunktion)
-pprint(f)
+pprint(f, use_unicode=False)
+
 
 #   Get Max Iterations
 userInputMaxIterations = input('Bitte geben Sie die maximale Anzahl der zu überprüfenden Folgenglieder an.')
@@ -43,7 +44,7 @@ print('=>  ' + str(userInputMaxIterations))
 
 # #################### Erstelle Folge ###################################
 
-folge, maxProblemstelle = funktionZuFolge(f, userInputMaxIterations)
+folge, definitionslucke = funktionZuFolge(f, userInputMaxIterations)
 print(folge)
 
 # ####################### Startindex ermitteln ######################
@@ -54,8 +55,8 @@ problemstellen = []
 for solution in problemstellenSet.args:
     problemstellen.append(solution.evalf())
 
-if maxProblemstelle is not None:
-    problemstellen.append(maxProblemstelle)
+if definitionslucke is not None:
+    problemstellen.append(definitionslucke)
 print('Problemstellen: ' + str(problemstellen))
 
 if len(problemstellen) > 0:
