@@ -95,4 +95,6 @@ plt.plot(range(0, userInputMaxIterations), folge, 'ro', markersize=3)
 if grenzwert:
     print('Grenzwert: ' + str(grenzwert.evalf()))
     plt.axhline(y=grenzwert, color='b', linestyle='-')
+else:
+    print('Keine Konvergenz, kein Grenzwert')
 plt.show()
