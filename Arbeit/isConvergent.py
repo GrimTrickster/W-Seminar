@@ -23,7 +23,7 @@ def funktionZuFolge(funktion, max_length):
 
 # ############### Get User Input #####################
 #   Get+Create Function
-userInputFunktion = input('Bitte geben Sie eine zu überprüfende Funktion mit der Variable x an.')
+userInputFunktion = input('Bitte geben Sie eine zu überprüfende Funktionsvorschrift mit der Variable x an.')
 # Standard-Option wenn nichts eingegeben wird
 if userInputFunktion == '':
     userInputFunktion = 'x/(x+1)+2'
@@ -67,7 +67,7 @@ if len(problemstellen) > 0:
 print('Startindex: ' + str(startIndex))
 
 
-# ############################## Grenzwert bestimmen######################################
+# ############################## Grenzwert bestimmen ######################################
 
 # Startvariablen festlegen (Start bei 1, da vorherige Werte benötigt werden)
 prevWert = folge[0 + startIndex]
@@ -85,12 +85,12 @@ for i in range(2+startIndex, len(folge)):
         grenzwert = None
         break
 
-    grenzwert = currWert
     prevWert = currWert
     currWert = folge[i]
     prevDiff = currDiff
+    grenzwert = currWert
 
-
+# ############ graphische Darstellung ######################
 plt.plot(range(0, userInputMaxIterations), folge, 'ro', markersize=3)
 if grenzwert:
     print('Grenzwert: ' + str(grenzwert.evalf()))
