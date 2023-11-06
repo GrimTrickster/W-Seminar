@@ -2,6 +2,13 @@ from sympy import Symbol, sympify, zoo, diff, S, pprint, solveset
 import matplotlib.pyplot as plt
 from math import ceil
 
+# Zu installieren:
+#
+# pip install sympy
+# pip install matplotlib
+
+
+
 # Sympy-Schreibweise um x als Variable zu definieren
 x = Symbol('x')
 
@@ -21,8 +28,8 @@ def funktionZuFolge(funktion, max_length):
     return a, max_problemstelle
 
 
-# ############### Get User Input #####################
-#   Get+Create Function
+# ############### Benutzer Input #####################
+#   Funktion abfragen und verarbeiten
 userInputFunktion = input('Bitte geben Sie eine zu überprüfende Funktionsvorschrift mit der Variable x an.')
 # Standard-Option wenn nichts eingegeben wird
 if userInputFunktion == '':
@@ -32,7 +39,7 @@ f = sympify(userInputFunktion)
 pprint(f, use_unicode=False)
 
 
-#   Get Max Iterations
+#   Maximale Länge/Iterationen abfragen und verarbeiten
 userInputMaxIterations = input('Bitte geben Sie die maximale Anzahl der zu überprüfenden Folgenglieder an.')
 # Standard-Option wenn nichts eingegeben wird
 if userInputMaxIterations == '':
@@ -49,6 +56,8 @@ print(folge)
 
 # ####################### Startindex ermitteln ######################
 startIndex = 0
+
+# Ableitung und Füllen von problemstellen[]
 f_erste_ableitung = diff(f, x)
 problemstellenSet = solveset(f_erste_ableitung, x, domain=S.Reals)
 problemstellen = []
@@ -59,6 +68,7 @@ if definitionslucke is not None:
     problemstellen.append(definitionslucke)
 print('Problemstellen: ' + str(problemstellen))
 
+# Höchste Problemstelle ermitteln
 if len(problemstellen) > 0:
     if max(problemstellen) == ceil(max(problemstellen)):
         startIndex = ceil(max(problemstellen)) + 1
@@ -97,4 +107,5 @@ if grenzwert:
     plt.axhline(y=grenzwert, color='b', linestyle='-')
 else:
     print('Keine Konvergenz, kein Grenzwert')
+
 plt.show()
